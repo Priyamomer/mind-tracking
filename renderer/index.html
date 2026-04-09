@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mind Tracker</title>
+
+  <!-- Modular stylesheets -->
+  <link rel="stylesheet" href="styles/variables.css" />
+  <link rel="stylesheet" href="styles/app.css" />
+  <link rel="stylesheet" href="styles/tabs.css" />
+  <link rel="stylesheet" href="styles/canvas.css" />
+  <link rel="stylesheet" href="styles/inputs.css" />
+  <link rel="stylesheet" href="styles/menus.css" />
+</head>
+<body>
+
+<div class="app" id="app">
+  <!-- Tab bar (rendered by tabs.js) -->
+  <div class="tab-bar" id="tabBar"></div>
+
+  <!-- Main canvas area -->
+  <div class="canvas-wrap" id="canvasWrap">
+    <svg class="canvas" id="svg" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4"
+                markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M1 1L7 4L1 7" fill="none"
+                stroke="rgba(127,119,221,0.45)" stroke-width="1.2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <g id="edgeLayer"></g>
+      <g id="nodeLayer"></g>
+      <g id="dragEdgeLayer"></g>
+      <g id="pulseLayer"></g>
+    </svg>
+
+    <div class="hint-text" id="hint">double-click to add node</div>
+    <div class="shortcut-badge">⌥V</div>
+
+    <!-- Floating node input (create / rename) -->
+    <div class="node-input-wrap" id="nodeInputWrap">
+      <input class="node-input" id="nodeInput" placeholder="name…" maxlength="18" />
+      <div class="suggestions" id="suggestions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Context menu (shared for nodes, edges, sessions) -->
+<div class="ctx-menu" id="ctxMenu">
+  <div class="ctx-item" id="ctxRename">rename</div>
+  <div class="ctx-item danger" id="ctxDelete">delete</div>
+</div>
+
+<!-- Modular scripts (load order matters) -->
+<script src="js/utils.js"></script>
+<script src="js/store.js"></script>
+<script src="js/suggestions.js"></script>
+<script src="js/context-menu.js"></script>
+<script src="js/node-input.js"></script>
+<script src="js/canvas.js"></script>
+<script src="js/tabs.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

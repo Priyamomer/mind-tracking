@@ -1,0 +1,29 @@
+:root {
+  --bg: #12121400;
+  --overlay-bg: rgba(16,16,18,0.95);
+  --border: rgba(255,255,255,0.08);
+
+  --tab-active-bg: rgba(127,119,221,0.22);
+  --tab-active-text: #AFA9EC;
+  --tab-text: rgba(255,255,255,0.35);
+
+  --node-fill: rgba(36,34,52,1);
+  --node-hot-fill: rgba(83,74,183,0.28);
+  --node-stroke: rgba(127,119,221,0.45);
+  --node-hot-stroke: rgba(175,169,236,0.85);
+  --node-label: rgba(255,255,255,0.5);
+  --node-count: rgba(175,169,236,0.85);
+  --node-count-hot: #AFA9EC;
+
+  --edge: rgba(127,119,221,0.3);
+  --hint: rgba(255,255,255,0.14);
+  --shortcut: rgba(255,255,255,0.18);
+
+  --input-bg: rgba(30,28,46,1);
+  --input-border: rgba(127,119,221,0.6);
+  --input-text: rgba(255,255,255,0.85);
+
+  --accent: rgba(127,119,221,0.18);
+  --accent-bright: #AFA9EC;
+  --danger: rgba(220,80,60,0.7);
+}

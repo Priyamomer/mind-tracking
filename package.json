@@ -1,0 +1,12 @@
+{
+  "name": "mind-tracker",
+  "version": "1.0.0",
+  "description": "Thought-pattern overlay tracker",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^29.0.0"
+  }
+}

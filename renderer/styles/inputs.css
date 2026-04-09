@@ -1,0 +1,23 @@
+.node-input-wrap {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+.node-input-wrap.visible { display: flex; }
+
+.node-input {
+  background: var(--input-bg);
+  border: 0.5px solid var(--input-border);
+  border-radius: 20px;
+  color: var(--input-text);
+  font-size: 11px;
+  padding: 5px 12px;
+  outline: none;
+  text-align: center;
+  width: 110px;
+}
+.node-input::placeholder { color: rgba(255,255,255,0.2); }
