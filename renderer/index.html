@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="styles/canvas.css" />
   <link rel="stylesheet" href="styles/inputs.css" />
   <link rel="stylesheet" href="styles/menus.css" />
+  <link rel="stylesheet" href="styles/timer.css" />
 
   <!-- Persist theme before first paint to avoid flash -->
   <script>
@@ -53,7 +54,7 @@
       </g>
     </svg>
 
-    <div class="hint-text" id="hint">double-click to add node</div>
+    <div class="hint-text" id="hint" style="display:none"></div>
     <div class="shortcut-badge">⌥V</div>
 
     <!-- Floating node input (create / rename) -->
@@ -77,6 +78,16 @@
   <div class="ctx-item" id="ctxUndo">undo click</div>
   <div class="ctx-item" id="ctxRename">rename</div>
   <div class="ctx-item danger" id="ctxDelete">delete</div>
+</div>
+
+<!-- Timer widget (bottom-center) -->
+<div class="timer-widget" id="timerWidget">
+  <button class="timer-adj" id="timerDown" title="Decrease interval">−</button>
+  <button class="timer-toggle-btn" id="timerToggle" title="Toggle reminder timer">
+    <span class="timer-dot" id="timerDot"></span>
+    <span class="timer-display" id="timerDisplay">5 min</span>
+  </button>
+  <button class="timer-adj" id="timerUp" title="Increase interval">+</button>
 </div>
 
 <!-- Bottom-right floating controls -->
@@ -148,5 +159,6 @@
 <script src="js/canvas.js"></script>
 <script src="js/tabs.js"></script>
 <script src="js/app.js"></script>
+<script src="js/timer.js"></script>
 </body>
 </html>

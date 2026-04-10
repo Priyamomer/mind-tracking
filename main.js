@@ -54,6 +54,31 @@ ipcMain.on('reload-main', () => {
   if (win && !win.isDestroyed()) win.reload();
 });
 
+// ─── Reminder Timer ───────────────────────────────────────────────────────────
+let reminderTimer    = null;
+let reminderInterval = 5 * 60 * 1000;
+let timerActive      = false;
+
+function scheduleNextReminder() {
+  if (!timerActive) return;
+  reminderTimer = setTimeout(() => {
+    showWindow();
+    scheduleNextReminder();
+  }, reminderInterval);
+}
+
+ipcMain.on('start-timer', (event, ms) => {
+  timerActive      = true;
+  reminderInterval = ms;
+  if (reminderTimer) clearTimeout(reminderTimer);
+  scheduleNextReminder();
+});
+
+ipcMain.on('stop-timer', () => {
+  timerActive = false;
+  if (reminderTimer) { clearTimeout(reminderTimer); reminderTimer = null; }
+});
+
 // Open analytics window
 ipcMain.on('open-analytics', () => {
   if (analyticsWin && !analyticsWin.isDestroyed()) {

@@ -7,4 +7,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   quitApp:       () => ipcRenderer.send('quit-app'),
   openAnalytics: () => ipcRenderer.send('open-analytics'),
   reloadMain:    () => ipcRenderer.send('reload-main'),
+  startTimer:    (ms) => ipcRenderer.send('start-timer', ms),
+  stopTimer:     () => ipcRenderer.send('stop-timer'),
 });
