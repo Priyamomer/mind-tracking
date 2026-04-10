@@ -2,10 +2,19 @@
 
 const CtxMenu = (() => {
   const menu      = document.getElementById('ctxMenu');
+  const undoBtn   = document.getElementById('ctxUndo');
   const renameBtn = document.getElementById('ctxRename');
   const deleteBtn = document.getElementById('ctxDelete');
 
-  function show(x, y, { renameLabel, deleteLabel, onRename, onDelete }) {
+  function show(x, y, { undoLabel, onUndo, renameLabel, deleteLabel, onRename, onDelete }) {
+    if (undoLabel) {
+      undoBtn.style.display = 'block';
+      undoBtn.textContent   = undoLabel;
+      undoBtn.onclick       = () => { hide(); onUndo && onUndo(); };
+    } else {
+      undoBtn.style.display = 'none';
+    }
+
     if (renameLabel) {
       renameBtn.style.display = 'block';
       renameBtn.textContent   = renameLabel;
@@ -24,6 +33,7 @@ const CtxMenu = (() => {
 
   function hide() {
     menu.classList.remove('visible');
+    undoBtn.style.display   = 'block';
     renameBtn.style.display = 'block';
   }
 

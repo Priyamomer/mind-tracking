@@ -52,9 +52,9 @@ function buildNodeLabel(text, cx, cy, r, hasCount) {
 
   const textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   textEl.setAttribute('text-anchor', 'middle');
-  textEl.setAttribute('fill', 'rgba(255,255,255,0.5)');
+  textEl.setAttribute('fill', getComputedStyle(document.documentElement).getPropertyValue('--node-label').trim());
   textEl.setAttribute('font-size', LABEL_FONT);
-  textEl.setAttribute('font-family', 'system-ui, sans-serif');
+  textEl.setAttribute('font-family', 'Inter, system-ui, sans-serif');
 
   lines.forEach((line, i) => {
     const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');

@@ -6,9 +6,10 @@ app.commandLine.appendSwitch('js-flags', '--max-old-space-size=128');
 
 if (app.dock) app.dock.hide();
 
-let win   = null;
-let tray  = null;
-let shown = false;
+let win          = null;
+let analyticsWin = null;
+let tray         = null;
+let shown        = false;
 
 // ─── Window ──────────────────────────────────────────────────────────────────
 
@@ -36,12 +37,50 @@ function createWindow() {
   win.setAlwaysOnTop(true, 'floating');
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
-  // Close button just hides — process stays alive so ⌥V is always instant.
+  // Clicking X now explicitly quits the background app, as requested by user.
   win.on('close', e => {
-    e.preventDefault();
-    hideWindow();
+    app.exit(0);
   });
 }
+
+// Listen for renderer-initiated quit
+const { ipcMain } = require('electron');
+ipcMain.on('quit-app', () => {
+  app.exit(0);
+});
+
+// Reload main window (called after reset)
+ipcMain.on('reload-main', () => {
+  if (win && !win.isDestroyed()) win.reload();
+});
+
+// Open analytics window
+ipcMain.on('open-analytics', () => {
+  if (analyticsWin && !analyticsWin.isDestroyed()) {
+    analyticsWin.focus();
+    return;
+  }
+  analyticsWin = new BrowserWindow({
+    width: 700,
+    height: 540,
+    minWidth: 580,
+    minHeight: 440,
+    titleBarStyle: 'hiddenInset',
+    backgroundColor: '#f0effe',
+    title: 'Lucent — Analytics',
+    alwaysOnTop: true,
+    visibleOnAllWorkspaces: true,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+  analyticsWin.setAlwaysOnTop(true, 'floating');
+  analyticsWin.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+  analyticsWin.loadFile(path.join(__dirname, 'renderer', 'analytics.html'));
+  analyticsWin.on('closed', () => { analyticsWin = null; });
+});
 
 // ─── Show / Hide ─────────────────────────────────────────────────────────────
 

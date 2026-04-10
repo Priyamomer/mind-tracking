@@ -1,53 +1,66 @@
+/* ─── Suggestions Dropdown ─── */
 .suggestions {
   display: none;
   flex-direction: column;
-  background: rgba(24,22,36,0.98);
-  border: 0.5px solid rgba(127,119,221,0.35);
-  border-radius: 8px;
+  background: var(--menu-bg);
+  border: 0.5px solid var(--menu-border);
+  border-radius: 10px;
   overflow: hidden;
-  width: 130px;
-  margin-top: 2px;
+  width: 136px;
+  margin-top: 3px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
 .suggestions.visible { display: flex; }
 
 .suggestion-item {
   font-size: 11px;
-  padding: 6px 12px;
-  color: rgba(255,255,255,0.55);
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 7px 13px;
+  color: var(--tab-text);
   cursor: pointer;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: background 0.1s, color 0.1s;
+  transition: background 0.12s ease, color 0.12s ease;
 }
 .suggestion-item:hover,
 .suggestion-item.focused {
-  background: rgba(127,119,221,0.18);
-  color: rgba(255,255,255,0.9);
+  background: var(--accent);
+  color: var(--input-text);
 }
-.suggestion-match { color: #AFA9EC; font-weight: 500; }
+.suggestion-match {
+  color: var(--accent-bright);
+  font-weight: 600;
+}
 
-/* Context menu */
+/* ─── Context Menu ─── */
 .ctx-menu {
   position: fixed;
-  background: rgba(24,22,36,0.98);
-  border: 0.5px solid rgba(127,119,221,0.3);
-  border-radius: 6px;
+  background: var(--menu-bg);
+  border: 0.5px solid var(--menu-border);
+  border-radius: 8px;
   overflow: hidden;
   z-index: 20;
   display: none;
-  min-width: 120px;
+  min-width: 130px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
 .ctx-menu.visible { display: block; }
 
 .ctx-item {
-  font-size: 11px;
-  padding: 7px 14px;
-  color: rgba(255,255,255,0.6);
+  font-size: 11.5px;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 8px 15px;
+  color: var(--tab-hover-text);
   cursor: pointer;
-  transition: background 0.1s;
+  transition: background 0.12s ease, color 0.12s ease;
 }
-.ctx-item:hover { background: rgba(127,119,221,0.15); color: rgba(255,255,255,0.9); }
-.ctx-item.danger { color: rgba(220,80,60,0.8); }
-.ctx-item.danger:hover { background: rgba(220,80,60,0.12); }
+.ctx-item:hover {
+  background: var(--accent);
+  color: var(--input-text);
+}
+.ctx-item.danger { color: var(--danger); }
+.ctx-item.danger:hover { background: var(--danger-bg); }

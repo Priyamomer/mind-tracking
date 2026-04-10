@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucent — Analytics</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/variables.css" />
+  <link rel="stylesheet" href="styles/analytics.css" />
+
+  <script>
+    // Analytics window is always light
+    document.documentElement.classList.add('light');
+  </script>
+</head>
+<body>
+
+<div class="a-app">
+  <div class="a-header">
+    <div class="a-titlebar">
+      <span class="a-title">Analytics</span>
+    </div>
+    <div class="a-header-row">
+      <div class="a-tabs">
+        <button class="a-tab active" data-tab="overview">Overview</button>
+        <button class="a-tab" data-tab="daily">Daily Summary</button>
+        <button class="a-tab" data-tab="timeline">Timeline</button>
+        <button class="a-tab" data-tab="transitions">Transitions</button>
+        <button class="a-tab" data-tab="timezone">Time Zone</button>
+      </div>
+      <button class="a-refresh-btn" id="aRefresh" title="Refresh data">↻</button>
+      <button class="a-reset-btn" id="aReset" title="Wipe all data">Reset</button>
+    </div>
+  </div>
+
+  <div class="a-content" id="aContent">
+    <div class="a-loading">loading events…</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/analytics.js"></script>
+</body>
+</html>

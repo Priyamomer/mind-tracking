@@ -64,9 +64,49 @@ const store = (() => {
     save();
   }
 
-  function recordEvent(nodeId) {
-    state.events.push({ id: uid(), node_id: nodeId, session_id: state.activeSession, timestamp: Date.now() });
+  function undoEvent(nodeId) {
+    const nodeEvents = state.events.filter(e => e.node_id === nodeId);
+    if (nodeEvents.length === 0) return null;
+    const last = nodeEvents[nodeEvents.length - 1];
+    state.events = state.events.filter(e => e.id !== last.id);
     save();
+    return last;
+  }
+
+  function recordEvent(nodeId) {
+    const now     = Date.now();
+    const node    = state.nodes.find(n => n.id === nodeId);
+    const session = state.sessions.find(s => s.id === state.activeSession);
+
+    const nodeEvents    = state.events.filter(e => e.node_id === nodeId);
+    const sessionEvents = state.events.filter(e => e.session_id === state.activeSession);
+    const lastAny       = sessionEvents[sessionEvents.length - 1] || null;
+    const lastThisNode  = nodeEvents[nodeEvents.length - 1] || null;
+
+    const event = {
+      id:                  uid(),
+      type:                'node_click',
+      timestamp:           now,
+
+      node_id:             nodeId,
+      node_label:          node    ? node.label    : '',
+      node_click_count:    nodeEvents.length,        // count *before* this click
+
+      session_id:          state.activeSession,
+      session_label:       session ? session.label  : '',
+      session_sequence:    sessionEvents.length + 1, // nth click in session
+
+      prev_node_id:        lastAny ? lastAny.node_id : null,
+      ms_since_prev_click: lastAny ? now - lastAny.timestamp       : null,
+      ms_since_this_node:  lastThisNode ? now - lastThisNode.timestamp : null,
+    };
+
+    state.events.push(event);
+    save();
+
+    if (typeof FirebaseDB !== 'undefined') {
+      FirebaseDB.logEvent(event);
+    }
   }
 
   function addEdge(fromId, toId) {
@@ -109,11 +149,23 @@ const store = (() => {
     save();
   }
 
+  function resetAll() {
+    state = {
+      sessions: [{ id: uid(), label: 'deep work sprint' }],
+      activeSession: null,
+      nodes: [],
+      edges: [],
+      events: [],
+    };
+    state.activeSession = state.sessions[0].id;
+    save();
+  }
+
   return {
     get state() { return state; },
     load, save,
     sessionNodes, sessionEdges, nodeCount,
-    addNode, renameNode, moveNode, deleteNode, recordEvent,
+    addNode, renameNode, moveNode, deleteNode, undoEvent, recordEvent, resetAll,
     addEdge, deleteEdge,
     addSession, renameSession, deleteSession, setActiveSession,
   };

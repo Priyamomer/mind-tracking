@@ -1,18 +1,21 @@
+/* ─── Global Reset & Body ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: #1a1a1c;
+  background: var(--bg-body);
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   overflow: hidden;
+  transition: background 0.35s ease;
 }
 
+/* ─── App Shell ─── */
 .app {
   background: var(--overlay-bg);
-  border-radius: 12px;
+  border-radius: 14px;
   border: 0.5px solid var(--border);
   width: 100vw;
   height: 100vh;
@@ -20,4 +23,51 @@ body {
   flex-direction: column;
   overflow: hidden;
   user-select: none;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+/* ─── Dark/Light Toggle Button ─── */
+.theme-toggle {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 100;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--toggle-bg);
+  border: 1px solid var(--toggle-border);
+  color: var(--toggle-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.18s ease;
+  box-shadow: 0 2px 12px var(--accent-glow);
+  -webkit-app-region: no-drag;
+}
+.theme-toggle:hover {
+  transform: scale(1.12) rotate(15deg);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* subtle radial glow on canvas in dark mode */
+:root:not(.light) .canvas-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 45% at 50% 50%,
+    rgba(127, 119, 221, 0.07) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }

@@ -1,29 +1,94 @@
+/* ─── Lucent Design Tokens ─── */
+
+/* ── DARK MODE (default) ── */
 :root {
-  --bg: #12121400;
-  --overlay-bg: rgba(16,16,18,0.95);
-  --border: rgba(255,255,255,0.08);
+  color-scheme: dark;
 
-  --tab-active-bg: rgba(127,119,221,0.22);
-  --tab-active-text: #AFA9EC;
-  --tab-text: rgba(255,255,255,0.35);
+  --bg-body:       #0d0d14;
+  --overlay-bg:    rgba(13, 11, 26, 0.97);
+  --border:        rgba(127, 119, 221, 0.15);
 
-  --node-fill: rgba(36,34,52,1);
-  --node-hot-fill: rgba(83,74,183,0.28);
-  --node-stroke: rgba(127,119,221,0.45);
-  --node-hot-stroke: rgba(175,169,236,0.85);
-  --node-label: rgba(255,255,255,0.5);
-  --node-count: rgba(175,169,236,0.85);
-  --node-count-hot: #AFA9EC;
+  --tab-bar-bg:    rgba(15, 13, 30, 0.98);
+  --tab-active-bg: rgba(127, 119, 221, 0.22);
+  --tab-active-text: #c8c3f5;
+  --tab-text:      rgba(200, 195, 240, 0.35);
+  --tab-hover-text: rgba(200, 195, 240, 0.65);
 
-  --edge: rgba(127,119,221,0.3);
-  --hint: rgba(255,255,255,0.14);
-  --shortcut: rgba(255,255,255,0.18);
+  --node-fill:        rgba(28, 24, 52, 1);
+  --node-hot-fill:    rgba(83, 74, 183, 0.30);
+  --node-stroke:      rgba(127, 119, 221, 0.50);
+  --node-hot-stroke:  rgba(175, 169, 236, 0.90);
+  --node-label:       rgba(210, 207, 245, 0.60);
+  --node-count:       rgba(175, 169, 236, 0.85);
+  --node-count-hot:   #c8c3f5;
 
-  --input-bg: rgba(30,28,46,1);
-  --input-border: rgba(127,119,221,0.6);
-  --input-text: rgba(255,255,255,0.85);
+  --edge:          rgba(127, 119, 221, 0.28);
+  --edge-arrow:    rgba(127, 119, 221, 0.50);
+  --hint:          rgba(200, 195, 240, 0.16);
+  --shortcut:      rgba(200, 195, 240, 0.22);
 
-  --accent: rgba(127,119,221,0.18);
-  --accent-bright: #AFA9EC;
-  --danger: rgba(220,80,60,0.7);
+  --input-bg:      rgba(22, 19, 44, 1);
+  --input-border:  rgba(127, 119, 221, 0.55);
+  --input-text:    rgba(210, 207, 245, 0.90);
+  --input-ph:      rgba(127, 119, 221, 0.30);
+
+  --menu-bg:       rgba(18, 15, 36, 0.98);
+  --menu-border:   rgba(127, 119, 221, 0.28);
+
+  --accent:        rgba(127, 119, 221, 0.18);
+  --accent-bright: #afa9ec;
+  --accent-glow:   rgba(127, 119, 221, 0.35);
+  --danger:        rgba(220, 80, 60, 0.75);
+  --danger-bg:     rgba(220, 80, 60, 0.12);
+
+  /* toggle button */
+  --toggle-bg:     rgba(127, 119, 221, 0.20);
+  --toggle-icon:   #c8c3f5;
+  --toggle-border: rgba(127, 119, 221, 0.40);
+}
+
+/* ── LIGHT MODE ── */
+:root.light {
+  color-scheme: light;
+
+  --bg-body:       #f0effe;
+  --overlay-bg:    rgba(247, 246, 255, 0.98);
+  --border:        rgba(100, 90, 200, 0.14);
+
+  --tab-bar-bg:    rgba(238, 236, 255, 0.96);
+  --tab-active-bg: rgba(127, 119, 221, 0.16);
+  --tab-active-text: #3730a3;
+  --tab-text:      rgba(60, 50, 150, 0.45);
+  --tab-hover-text: rgba(60, 50, 150, 0.75);
+
+  --node-fill:        rgba(240, 238, 255, 1);
+  --node-hot-fill:    rgba(127, 119, 221, 0.15);
+  --node-stroke:      rgba(100, 90, 210, 0.50);
+  --node-hot-stroke:  rgba(80, 70, 190, 0.90);
+  --node-label:       rgba(30, 25, 80, 0.70);
+  --node-count:       rgba(80, 70, 190, 0.85);
+  --node-count-hot:   #3730a3;
+
+  --edge:          rgba(100, 90, 210, 0.28);
+  --edge-arrow:    rgba(100, 90, 210, 0.50);
+  --hint:          rgba(60, 50, 150, 0.25);
+  --shortcut:      rgba(60, 50, 150, 0.30);
+
+  --input-bg:      rgba(255, 254, 255, 1);
+  --input-border:  rgba(100, 90, 210, 0.55);
+  --input-text:    rgba(20, 15, 60, 0.90);
+  --input-ph:      rgba(100, 90, 210, 0.35);
+
+  --menu-bg:       rgba(248, 247, 255, 0.99);
+  --menu-border:   rgba(100, 90, 210, 0.22);
+
+  --accent:        rgba(127, 119, 221, 0.12);
+  --accent-bright: #4340a3;
+  --accent-glow:   rgba(127, 119, 221, 0.20);
+  --danger:        rgba(200, 55, 40, 0.80);
+  --danger-bg:     rgba(200, 55, 40, 0.10);
+
+  --toggle-bg:     rgba(127, 119, 221, 0.14);
+  --toggle-icon:   #3730a3;
+  --toggle-border: rgba(100, 90, 210, 0.35);
 }

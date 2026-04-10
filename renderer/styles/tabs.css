@@ -1,16 +1,19 @@
+/* ─── Tab Bar ─── */
 .tab-bar {
   display: flex;
   align-items: center;
+  background: var(--tab-bar-bg);
   border-bottom: 0.5px solid var(--border);
-  padding: 0 8px 0 76px; /* 76px left offset clears macOS traffic lights */
-  height: 34px;
+  padding: 0 8px 0 76px; /* 76px left clears macOS traffic lights */
+  height: 36px;
   gap: 2px;
   flex-shrink: 0;
   position: relative;
-  -webkit-app-region: drag; /* allow dragging the window from the tab bar */
+  -webkit-app-region: drag;
+  transition: background 0.35s ease, border-color 0.35s ease;
 }
 
-/* Carve out the traffic-light zone so drag region doesn't swallow clicks */
+/* Carve out traffic-light zone */
 .tab-bar::before {
   content: '';
   position: absolute;
@@ -19,40 +22,54 @@
   -webkit-app-region: no-drag;
 }
 
+/* ─── Individual Tab ─── */
 .tab {
   font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 4px 12px;
+  border-radius: 6px;
   cursor: pointer;
   color: var(--tab-text);
   white-space: nowrap;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.18s ease, color 0.18s ease;
   -webkit-app-region: no-drag;
 }
-.tab:hover { color: rgba(255,255,255,0.6); }
-.tab.active { background: var(--tab-active-bg); color: var(--tab-active-text); }
+.tab:hover { color: var(--tab-hover-text); }
+.tab.active {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-text);
+  box-shadow: 0 0 0 0.5px var(--border);
+}
 
+/* ─── Rename Input in Tab Bar ─── */
 .tab-input {
   background: var(--input-bg);
   border: 0.5px solid var(--input-border);
-  border-radius: 4px;
+  border-radius: 5px;
   color: var(--input-text);
   font-size: 11px;
   padding: 3px 8px;
   outline: none;
   width: 120px;
   -webkit-app-region: no-drag;
+  transition: border-color 0.18s;
 }
+.tab-input:focus { border-color: var(--accent-bright); }
 
+/* ─── Add Session Button ─── */
 .tab-add {
-  font-size: 16px;
-  color: rgba(255,255,255,0.22);
+  font-size: 17px;
+  line-height: 1;
+  color: var(--tab-text);
   padding: 0 6px;
   cursor: pointer;
-  line-height: 1;
-  transition: color 0.15s;
+  transition: color 0.18s ease, transform 0.18s ease;
   -webkit-app-region: no-drag;
 }
-.tab-add:hover { color: rgba(255,255,255,0.5); }
+.tab-add:hover {
+  color: var(--tab-hover-text);
+  transform: scale(1.15);
+}
 
 .spacer { flex: 1; }

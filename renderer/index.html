@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mind Tracker</title>
+  <title>Lucent — Mind Tracker</title>
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Modular stylesheets -->
   <link rel="stylesheet" href="styles/variables.css" />
@@ -12,6 +17,14 @@
   <link rel="stylesheet" href="styles/canvas.css" />
   <link rel="stylesheet" href="styles/inputs.css" />
   <link rel="stylesheet" href="styles/menus.css" />
+
+  <!-- Persist theme before first paint to avoid flash -->
+  <script>
+    (function () {
+      const saved = localStorage.getItem('lucent-theme');
+      if (saved === 'light') document.documentElement.classList.add('light');
+    })();
+  </script>
 </head>
 <body>
 
@@ -26,14 +39,18 @@
         <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4"
                 markerWidth="5" markerHeight="5" orient="auto-start-reverse">
           <path d="M1 1L7 4L1 7" fill="none"
-                stroke="rgba(127,119,221,0.45)" stroke-width="1.2"
+                stroke="var(--edge-arrow)" stroke-width="1.2"
                 stroke-linecap="round" stroke-linejoin="round"/>
         </marker>
       </defs>
-      <g id="edgeLayer"></g>
-      <g id="nodeLayer"></g>
-      <g id="dragEdgeLayer"></g>
-      <g id="pulseLayer"></g>
+
+      <!-- Single transform group — zoom + pan applied here -->
+      <g id="viewport">
+        <g id="edgeLayer"></g>
+        <g id="nodeLayer"></g>
+        <g id="dragEdgeLayer"></g>
+        <g id="pulseLayer"></g>
+      </g>
     </svg>
 
     <div class="hint-text" id="hint">double-click to add node</div>
@@ -44,17 +61,86 @@
       <input class="node-input" id="nodeInput" placeholder="name…" maxlength="18" />
       <div class="suggestions" id="suggestions"></div>
     </div>
+
+    <!-- Zoom controls -->
+    <div class="zoom-controls" id="zoomControls">
+      <button class="zoom-btn" id="zoomIn"    title="Zoom in (⌘+)">+</button>
+      <span   class="zoom-level" id="zoomLevel">100%</span>
+      <button class="zoom-btn" id="zoomOut"   title="Zoom out (⌘−)">−</button>
+      <button class="zoom-btn zoom-reset" id="zoomReset" title="Reset view (⌘0)">⌂</button>
+    </div>
   </div>
 </div>
 
 <!-- Context menu (shared for nodes, edges, sessions) -->
 <div class="ctx-menu" id="ctxMenu">
+  <div class="ctx-item" id="ctxUndo">undo click</div>
   <div class="ctx-item" id="ctxRename">rename</div>
   <div class="ctx-item danger" id="ctxDelete">delete</div>
 </div>
 
+<!-- Bottom-right floating controls -->
+<button class="theme-toggle" id="analyticsToggle" title="Open Analytics" aria-label="Open analytics" style="bottom: 100px; font-size: 14px;">
+  ◈
+</button>
+
+<button class="theme-toggle" id="quitToggle" title="Quit App" aria-label="Quit app" style="bottom: 60px; color: var(--danger); font-family: sans-serif;">
+  ✕
+</button>
+
+<!-- Dark / Light mode toggle -->
+<button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode" aria-label="Toggle theme">
+  🌙
+</button>
+
+<!-- Theme toggle logic -->
+<script>
+  (function () {
+    const btn  = document.getElementById('themeToggle');
+    const root = document.documentElement;
+
+    function isLight() { return root.classList.contains('light'); }
+
+    function updateIcon() {
+      btn.textContent = isLight() ? '🌙' : '☀️';
+      btn.title = isLight() ? 'Switch to dark mode' : 'Switch to light mode';
+    }
+
+    updateIcon(); // sync icon with persisted state
+
+    btn.addEventListener('click', () => {
+      root.classList.toggle('light');
+      localStorage.setItem('lucent-theme', isLight() ? 'light' : 'dark');
+      updateIcon();
+    });
+
+    const quitBtn = document.getElementById('quitToggle');
+    if (quitBtn) {
+      quitBtn.addEventListener('click', () => {
+        if (window.electronAPI && window.electronAPI.quitApp) {
+          window.electronAPI.quitApp();
+        }
+      });
+    }
+
+    const analyticsBtn = document.getElementById('analyticsToggle');
+    if (analyticsBtn) {
+      analyticsBtn.addEventListener('click', () => {
+        if (window.electronAPI && window.electronAPI.openAnalytics) {
+          window.electronAPI.openAnalytics();
+        }
+      });
+    }
+  })();
+</script>
+
+<!-- Firebase compat SDK (must load before firebase.js) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
 <!-- Modular scripts (load order matters) -->
 <script src="js/utils.js"></script>
+<script src="js/firebase.js"></script>
 <script src="js/store.js"></script>
 <script src="js/suggestions.js"></script>
 <script src="js/context-menu.js"></script>

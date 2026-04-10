@@ -1,12 +1,28 @@
 {
-  "name": "mind-tracker",
+  "name": "lucent",
+  "productName": "Lucent",
   "version": "1.0.0",
   "description": "Thought-pattern overlay tracker",
+  "author": "Lucent",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder -m"
+  },
+  "build": {
+    "appId": "com.lucent.app",
+    "productName": "Lucent",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "icon": "icon.png",
+      "target": ["dmg", "zip"]
+    }
   },
   "devDependencies": {
-    "electron": "^29.0.0"
+    "electron": "^29.0.0",
+    "electron-builder": "^24.13.3"
   }
 }
